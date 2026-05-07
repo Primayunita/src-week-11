@@ -47,9 +47,15 @@ class _FuturePageState extends State<FuturePage> {
 
   // Method calculate
   Future calculate() async {
-    await Future.delayed(const Duration(seconds: 5));
+    try {
+      await Future.delayed(const Duration(seconds: 5));
 
-    completer.complete(42);
+      completer.complete(42);
+
+      // throw Exception();
+    } catch (_) {
+      completer.completeError({});
+    }
   }
 
   // Future API Google Books
@@ -111,6 +117,8 @@ class _FuturePageState extends State<FuturePage> {
                   setState(() {
                     result = value.toString();
                   });
+                }).catchError((e) {
+                  result = 'An error occurred';
                 });
 
                 // count(); // kode sebelumnya bisa dicomment
