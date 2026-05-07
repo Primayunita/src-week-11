@@ -46,6 +46,8 @@ class _FuturePageState extends State<FuturePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
         title: const Text('Back from the Future'),
       ),
       body: Center(
@@ -53,6 +55,24 @@ class _FuturePageState extends State<FuturePage> {
           children: [
             const Spacer(),
 
+            ElevatedButton(
+              child: const Text('GO!'),
+              onPressed: () {
+              setState(() {});
+
+              getData()
+              .then((value) {
+                result = value.body.toString().substring(0, 450);
+
+                setState(() {});
+            })
+            .catchError((_) {
+              result = 'An error occurred';
+
+              setState(() {});
+            });
+          },
+      ),
             const Spacer(),
             Text(result),
             const Spacer(),
