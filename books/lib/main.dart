@@ -76,6 +76,11 @@ class _FuturePageState extends State<FuturePage> {
     return 3;
   }
 
+  Future returnError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Something terrible happened!');
+  }
+
   Future count() async {
     int total = 0;
 
