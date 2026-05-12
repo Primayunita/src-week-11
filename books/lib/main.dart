@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:async/async.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,10 +33,8 @@ class FuturePage extends StatefulWidget {
 class _FuturePageState extends State<FuturePage> {
   String result = '';
 
-  // Tambahan variabel Completer
   late Completer completer;
 
-  // Method getNumber
   Future getNumber() {
     completer = Completer<int>();
     calculate();
@@ -45,20 +42,16 @@ class _FuturePageState extends State<FuturePage> {
     return completer.future;
   }
 
-  // Method calculate
   Future calculate() async {
     try {
       await Future.delayed(const Duration(seconds: 5));
 
-      completer.complete(42);
-
-      // throw Exception();
+      throw Exception();
     } catch (_) {
       completer.completeError({});
     }
   }
 
-  // Future API Google Books
   Future<Response> getData() async {
     const authority = 'www.googleapis.com';
     const path = '/books/v1/volumes/B4_iEAAAQBAJ';
@@ -68,7 +61,6 @@ class _FuturePageState extends State<FuturePage> {
     return http.get(url);
   }
 
-  // Tambahan Future Async
   Future<int> returnOneAsync() async {
     await Future.delayed(const Duration(seconds: 3));
     return 1;
@@ -84,7 +76,6 @@ class _FuturePageState extends State<FuturePage> {
     return 3;
   }
 
-  // Method count
   Future count() async {
     int total = 0;
 
@@ -94,6 +85,26 @@ class _FuturePageState extends State<FuturePage> {
 
     setState(() {
       result = total.toString();
+    });
+  }
+
+  void returnFG() {
+    final futures = Future.wait<int>([
+      returnOneAsync(),
+      returnTwoAsync(),
+      returnThreeAsync(),
+    ]);
+
+    futures.then((List<int> value) {
+      int total = 0;
+
+      for (var element in value) {
+        total += element;
+      }
+
+      setState(() {
+        result = total.toString();
+      });
     });
   }
 
@@ -113,15 +124,7 @@ class _FuturePageState extends State<FuturePage> {
             ElevatedButton(
               child: const Text('GO!'),
               onPressed: () {
-                getNumber().then((value) {
-                  setState(() {
-                    result = value.toString();
-                  });
-                }).catchError((e) {
-                  result = 'An error occurred';
-                });
-
-                // count(); // kode sebelumnya bisa dicomment
+                returnFG();
               },
             ),
 
