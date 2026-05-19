@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'geolocation.dart';
+import 'navigation_first.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,10 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Future Demo Nita',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const LocationScreen(),
+      home: const NavigationFirst(),
     );
   }
 }
@@ -132,7 +133,7 @@ class _FuturePageState extends State<FuturePage> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        title: const Text('Back from the Future'),
+        title: const Text('Back from the Future Nita'),
       ),
       body: Center(
         child: Column(
